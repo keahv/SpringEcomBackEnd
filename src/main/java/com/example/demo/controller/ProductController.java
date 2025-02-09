@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
 public class ProductController {
 
@@ -44,8 +44,8 @@ public class ProductController {
     }
 
 
-    @PostMapping("/product")
-    public ResponseEntity<?> addProduct(@RequestParam Product product){
+    @PostMapping("/products")
+    public ResponseEntity<?> addProduct(@RequestBody Product product){
 
         try{
             Product product1 = service.addProduct(product);
@@ -57,7 +57,7 @@ public class ProductController {
 
 
     @PutMapping("/product/{id}")
-    public ResponseEntity<String> updateProduct(@PathVariable int id, @RequestBody Product product){
+    public ResponseEntity<?> updateProduct(@PathVariable int id, @RequestBody Product product){
         Product product1 = null;
         try {
             System.out.println("h1");
@@ -66,10 +66,13 @@ public class ProductController {
         } catch (IOException e) {
             return new ResponseEntity<>("Failed to update", HttpStatus.BAD_REQUEST);
         }
-        if(product1 != null)
-            return new ResponseEntity<>("Updated", HttpStatus.OK);
-        else
-            return new ResponseEntity<>("Failed to update", HttpStatus.BAD_REQUEST);
+        if(product1 != null){
+            System.out.println("h3");
+            return new ResponseEntity<>(product1, HttpStatus.OK);
+            }
+        else{
+            System.out.println("h4");
+            return new ResponseEntity<>("Failed to update", HttpStatus.BAD_REQUEST);}
     }
 
 

@@ -31,7 +31,7 @@ public class ProductService {
 
 
     public Product updateProduct(int id, Product product) throws IOException {
-
+       product.setId(id);
        return repo.save(product);
     }
 
