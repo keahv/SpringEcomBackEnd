@@ -55,6 +55,23 @@ public class UserController {
         return new ResponseEntity<>(resp,HttpStatus.NOT_FOUND);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody() User RequestedUser){
+       List<User> users = userService.getAllUsers();
+       Map<String,Object> resp = new HashMap<>();
+       for (User user:users){
+           if (user.getUserEmail().equals(RequestedUser.getUserEmail()) && user.getPassword().equals(RequestedUser.getPassword())) {
+               resp.put("msg","Login Successful");
+               resp.put("status",true);
+               resp.put("data",user);
+               return new ResponseEntity<>(resp,HttpStatus.OK);
+           }
+       }
+       resp.put("msg","wrong Credentials");
+       resp.put("status",false);
+       return new ResponseEntity<>(resp,HttpStatus.NOT_FOUND);
+    }
+
     @PutMapping("")
     public ResponseEntity<?> updateUser(@RequestBody User user){
         User updatedUser = userService.addUser(user);
