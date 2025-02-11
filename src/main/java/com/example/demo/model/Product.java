@@ -15,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Table(name = "product")
 public class Product {
-
+//https://chatgpt.com/share/67a8eee6-42ec-800c-94f2-57690a5d76d8
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
