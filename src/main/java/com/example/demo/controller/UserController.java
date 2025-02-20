@@ -8,9 +8,9 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.swing.text.html.Option;
+import java.util.*;
+import java.util.stream.Stream;
 
 @RestController
 @CrossOrigin
@@ -47,27 +47,30 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable int id){
         User user = userService.getUserById(id);
+        Map<String,Object> resp = new HashMap<>();
         if (user != null){
-            return new ResponseEntity<>(user,HttpStatus.FOUND);
+            resp.put("msg","User Found");
+            resp.put("status",true);
+            return new ResponseEntity<>(resp,HttpStatus.FOUND);
         }
-        Map<String,String> resp = new HashMap<>();
-        resp.put("msg","Record Not Found");
+        resp.put("msg","Record Not Found please Sign Up");
+        resp.put("status",false);
         return new ResponseEntity<>(resp,HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody() User RequestedUser){
+    public ResponseEntity<?> loginUser(@RequestBody() User requestedUser){
        List<User> users = userService.getAllUsers();
        Map<String,Object> resp = new HashMap<>();
        for (User user:users){
-           if (user.getUserEmail().equals(RequestedUser.getUserEmail()) && user.getPassword().equals(RequestedUser.getPassword())) {
+           if (user.getUserEmail().equals(requestedUser.getUserEmail()) && user.getPassword().equals(requestedUser.getPassword())) {
                resp.put("msg","Login Successful");
                resp.put("status",true);
                resp.put("data",user);
                return new ResponseEntity<>(resp,HttpStatus.OK);
            }
        }
-       resp.put("msg","wrong Credentials");
+       resp.put("msg","Wrong Credentials");
        resp.put("status",false);
        return new ResponseEntity<>(resp,HttpStatus.NOT_FOUND);
     }
