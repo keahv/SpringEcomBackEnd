@@ -19,6 +19,7 @@ public class User {
     private String userEmail;
     private String password;
     private boolean isActive;
+    private String AccessRole;
 
     public int getId() {
         return id;
@@ -58,6 +59,14 @@ public class User {
 
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public String getAccessRole() {
+        return AccessRole;
+    }
+
+    public void setAccessRole(String accessRole) {
+        AccessRole = accessRole;
     }
 
     @Override

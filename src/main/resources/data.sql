@@ -5,3 +5,8 @@ VALUES
 		( 'Wireless Headphones', 'Noise-canceling headphones with superior sound quality.', 'SoundMax', 199.99, 'Accessories', '2024-01-10', TRUE, 200, 'https://media.istockphoto.com/id/913851526/photo/white-headphones.jpg?s=612x612&w=is&k=20&c=Yj7GKmwpgb2bzZiws9_FnRtq3iRVdw2trwI-ALpJ1iA='),
 		( 'Smartwatch Z', 'Stylish smartwatch with health tracking and notifications.', 'WearTech', 299.00, 'Wearables', '2023-10-05', TRUE, 120, 'https://images.unsplash.com/photo-1617625802912-cde586faf331?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c21hcnR3YXRjaHxlbnwwfHwwfHx8MA%3D%3D'),
 		( '4K Ultra HD TV', 'Large screen 4K TV with smart features.', 'VisionCorp', 1199.99, 'Home Appliances', '2023-09-20', TRUE, 30, 'https://images.unsplash.com/flagged/photo-1572609239482-d3a83f976aa0?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGQlMjB0dnxlbnwwfHwwfHx8MA%3D%3D');
+
+
+INSERT INTO Users (user_name,user_email,is_active,password,access_role)
+ VALUES ('keshav khekade','keshavkhekade@gmail.com',true,'123456?','user'),
+        ('Admin','admin@gmail.com',true,'root@123','admin')

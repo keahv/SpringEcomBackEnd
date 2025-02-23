@@ -66,7 +66,11 @@ public class UserController {
            if (user.getUserEmail().equals(requestedUser.getUserEmail()) && user.getPassword().equals(requestedUser.getPassword())) {
                resp.put("msg","Login Successful");
                resp.put("status",true);
-               resp.put("data",user);
+               user.setIsActive(true);
+               User modifiedUser = userService.addUser(user);
+               resp.put("data",modifiedUser);
+
+
                return new ResponseEntity<>(resp,HttpStatus.OK);
            }
        }
@@ -102,6 +106,43 @@ public class UserController {
             return new ResponseEntity<>(resp,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @GetMapping("/isActive/{id}")
+    public ResponseEntity<?> isUserActive(@PathVariable int id){
+        User user = userService.getUserById(id);
+        Map<String,Object> resp = new HashMap<>();
+        if (user != null){
+            resp.put("msg","User Found");
+            resp.put("isActive",user.isActive());
+            return new ResponseEntity<>(resp,HttpStatus.OK);
+        }
+        resp.put("msg","User Not Found");
+        resp.put("isActive",false);
+        return new ResponseEntity<>(resp,HttpStatus.NOT_FOUND);
+    }
 
+    @GetMapping("/logout/{id}")
+    public ResponseEntity<?> logout(@PathVariable int id){
+        User user = userService.getUserById(id);
+        Map<String,Object> resp = new HashMap<>();
+        if (user != null){
+            user.setIsActive(false);
+            User logoutUser = userService.addUser(user);
+            resp.put("msg","logout Successfully");
+            resp.put("status",true);
+            resp.put("data",logoutUser);
+            return new ResponseEntity<>(resp,HttpStatus.OK);
+        }
+        resp.put("msg","User Not Found");
+        resp.put("isActive",false);
+        return new ResponseEntity<>(resp,HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/isEmailValid")
+    public ResponseEntity<?> validateEmail(@RequestParam String email){
+        boolean isValidEmail = userService.isValidEmail(email);
+        Map<String,Object> resp = new HashMap<>();
+        resp.put("data",isValidEmail);
+        return new ResponseEntity<>(resp,HttpStatus.OK);
+    }
 
 }
