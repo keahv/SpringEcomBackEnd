@@ -5,6 +5,7 @@ import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RequestMapping("/api")
 public class ProductController {
 
@@ -45,6 +46,7 @@ public class ProductController {
 
 
     @PostMapping("/products")
+    @PreAuthorize("user")
     public ResponseEntity<?> addProduct(@RequestBody Product product){
 
         try{

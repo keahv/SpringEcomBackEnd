@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 @RequestMapping("/api/users")
 public class UserController {
 
+
     private UserService userService;
 
     @Autowired
@@ -58,25 +59,47 @@ public class UserController {
         return new ResponseEntity<>(resp,HttpStatus.NOT_FOUND);
     }
 
+//    @PostMapping("/login")
+//    public ResponseEntity<?> loginUser(@RequestBody() User requestedUser){
+//       List<User> users = userService.getAllUsers();
+//       Map<String,Object> resp = new HashMap<>();
+//       for (User user:users){
+//           if (user.getUserEmail().equals(requestedUser.getUserEmail()) && user.getPassword().equals(requestedUser.getPassword())) {
+//               resp.put("msg","Login Successful");
+//               resp.put("status",true);
+//               user.setIsActive(true);
+//               User modifiedUser = userService.addUser(user);
+//               resp.put("data",modifiedUser);
+//
+//
+//               return new ResponseEntity<>(resp,HttpStatus.OK);
+//           }
+//       }
+//       resp.put("msg","Wrong Credentials");
+//       resp.put("status",false);
+//       return new ResponseEntity<>(resp,HttpStatus.NOT_FOUND);
+//    }
+
+    @PostMapping("/register")
+    public User register(@RequestBody User user) {
+        return userService.register(user);
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody() User requestedUser){
-       List<User> users = userService.getAllUsers();
-       Map<String,Object> resp = new HashMap<>();
-       for (User user:users){
-           if (user.getUserEmail().equals(requestedUser.getUserEmail()) && user.getPassword().equals(requestedUser.getPassword())) {
-               resp.put("msg","Login Successful");
-               resp.put("status",true);
-               user.setIsActive(true);
-               User modifiedUser = userService.addUser(user);
-               resp.put("data",modifiedUser);
-
-
-               return new ResponseEntity<>(resp,HttpStatus.OK);
-           }
-       }
-       resp.put("msg","Wrong Credentials");
-       resp.put("status",false);
-       return new ResponseEntity<>(resp,HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> login(@RequestBody User user) {
+        Map<String,Object> resp = new HashMap<>();
+        user.setUserName(user.getUserEmail());
+        String token = userService.verify(user);
+        if (token.equalsIgnoreCase("fail")) {
+            resp.put("msg","Wrong Credentials");
+            resp.put("status",false);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        resp.put("msg","Login Successful");
+        resp.put("status",true);
+        resp.put("token",token);
+        resp.put("data",userService.findUserByEmail(user.getUserEmail()));
+        return new ResponseEntity<>(resp,HttpStatus.OK);
     }
 
     @PutMapping("")
@@ -89,6 +112,7 @@ public class UserController {
         resp.put("msg","Failed to Update User");
         return new ResponseEntity<>(resp,HttpStatus.NOT_MODIFIED);
     }
+
 
 
     @DeleteMapping("/{id}")

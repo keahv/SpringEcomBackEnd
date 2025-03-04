@@ -8,5 +8,5 @@ VALUES
 
 
 INSERT INTO Users (user_name,user_email,is_active,password,access_role)
- VALUES ('keshav khekade','keshavkhekade@gmail.com',true,'123456?','user'),
-        ('Admin','admin@gmail.com',true,'root@123','admin')
+ VALUES ('keshav khekade','keshavkhekade@gmail.com',true,'$2a$12$R5Q9j.BTH9CKUj.TF3WjMezZeG24v798UXyW3LLAEGV0iNB77cg1y','user'),
+        ('Admin','admin@gmail.com',true,'$2a$12$FroFgJiv2OihEPQlU50lsOxPWUAPpRC0VGn3ZTvFJyxtf9t2xascS','admin')
